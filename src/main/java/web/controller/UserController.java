@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import web.dao.UserDaoImpl;
+import web.model.User;
 
 @Controller
 @RequestMapping("/users")
@@ -27,5 +28,13 @@ public class UserController {
     public String show(@PathVariable("id") int id, Model model){
         model.addAttribute("user", userDaoImpl.show(id));
         return "show";
+    }
+
+    @GetMapping("/new")
+    public String newUser(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
+        userDaoImpl.addUser(user);
+        return "new";
     }
 }

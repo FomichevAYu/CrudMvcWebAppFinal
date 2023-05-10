@@ -20,4 +20,7 @@ public class UserDaoImpl {
     public User show(int id){
         return listUser.stream().filter(user -> user.getId()==id).findAny().orElse(null);
     }
+    public void addUser(User user){
+        listUser.add(user);
+    }
 }
