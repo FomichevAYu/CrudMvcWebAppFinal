@@ -8,5 +8,7 @@
 <p th:text="${user.getId()}">VALUE</p>
 <p th:text="${user.getName()}">VALUE</p>
 <p th:text="${user.getLastName()}">VALUE</p>
+<br>
+<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit user</a>
 </body>
 </html>

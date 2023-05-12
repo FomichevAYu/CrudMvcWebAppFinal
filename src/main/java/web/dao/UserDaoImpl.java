@@ -23,4 +23,10 @@ public class UserDaoImpl {
     public void addUser(User user){
         listUser.add(user);
     }
+    public void update(User user, int id){
+        User updateUser = show(id);
+        updateUser.setId(user.getId());
+        updateUser.setName(user.getName());
+        updateUser.setLastName(user.getLastName());
+    }
 }
