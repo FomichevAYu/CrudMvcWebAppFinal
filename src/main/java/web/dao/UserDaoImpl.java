@@ -1,13 +1,8 @@
 package web.dao;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -20,19 +15,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> index() {
+    public List<User> showAllUsers() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
-    public User show(int id) {
+    public User showUser(int id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(User.class, id);
     }
 
     @Override
-    public void addUser(User user) {
+    public void createUser(User user) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(user);
@@ -40,10 +35,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user, int id) {
+    public void updateUser(User user, int id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        User updateUser = show(id);
+        User updateUser = showUser(id);
         updateUser.setName(user.getName());
         updateUser.setLastName(user.getLastName());
         entityManager.merge(updateUser);
@@ -51,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteUser(int id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         User user = entityManager.find(User.class, id);
