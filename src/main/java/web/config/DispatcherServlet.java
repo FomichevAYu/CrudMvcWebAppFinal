@@ -1,5 +1,6 @@
 package web.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -25,8 +26,13 @@ public class DispatcherServlet extends AbstractAnnotationConfigDispatcherServlet
         super.onStartup(servletContext);
         registerHiddenFieldFilter(servletContext);
     }
+
     private void registerHiddenFieldFilter(ServletContext servletContext){
         servletContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
+    }
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
     }
 }

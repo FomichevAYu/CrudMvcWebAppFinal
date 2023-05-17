@@ -7,9 +7,6 @@
 <body>
 <form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
   <div>
-    <label for="id">Enter id</label>
-    <input type="number" th:field="*{id}" id="id"  />
-    </br>
     <label for="name">Edit name</label>
     <input type="text" th:field="*{name}" id="name"  />
     </br>

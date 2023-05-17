@@ -6,25 +6,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import web.dao.UserDaoImpl;
 import web.model.User;
+import web.service.UserServiceImpl;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private final UserDaoImpl userDaoImpl;
+    private final UserServiceImpl userService;
     @Autowired
-    public UserController(UserDaoImpl userDaoImpl) {
-        this.userDaoImpl = userDaoImpl;
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("users", userDaoImpl.index());
+        model.addAttribute("users", userService.index());
         return "index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model){
-        model.addAttribute("user", userDaoImpl.show(id));
+        model.addAttribute("user", userService.show(id));
         return "show";
     }
 
@@ -35,23 +36,23 @@ public class UserController {
 
     @PostMapping
     public String addUser(@ModelAttribute("user") User user) {
-    userDaoImpl.addUser(user);
+    userService.addUser(user);
     return "redirect:/users/";
     }
 
     @GetMapping("/{id}/edit")
     public String editUser(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userDaoImpl.show(id));
-        return "/edit";
+        model.addAttribute("user", userService.show(id));
+        return "edit";
     }
     @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id){
-        userDaoImpl.update(user, id);
-        return "redirect:/users/";
+        userService.update(user, id);
+        return "redirect:/users/{id}";
     }
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userDaoImpl.delete(id);
+        userService.delete(id);
         return "redirect:/users/";
     }
 }
