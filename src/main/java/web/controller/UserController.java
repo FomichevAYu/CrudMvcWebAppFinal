@@ -12,32 +12,33 @@ import web.service.UserServiceImpl;
 @RequestMapping("/users")
 public class UserController {
     private final UserServiceImpl userService;
+
     @Autowired
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model) {
         model.addAttribute("users", userService.index());
         return "index";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model){
+    public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.show(id));
         return "show";
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user){
+    public String newUser(@ModelAttribute("user") User user) {
         return "new";
     }
 
     @PostMapping
     public String addUser(@ModelAttribute("user") User user) {
-    userService.addUser(user);
-    return "redirect:/users/";
+        userService.addUser(user);
+        return "redirect:/users/";
     }
 
     @GetMapping("/{id}/edit")
@@ -45,11 +46,13 @@ public class UserController {
         model.addAttribute("user", userService.show(id));
         return "edit";
     }
+
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id){
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
         userService.update(user, id);
         return "redirect:/users/{id}";
     }
+
     @PostMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         userService.delete(id);

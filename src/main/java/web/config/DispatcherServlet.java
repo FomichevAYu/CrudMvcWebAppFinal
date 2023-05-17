@@ -15,22 +15,24 @@ public class DispatcherServlet extends AbstractAnnotationConfigDispatcherServlet
     }
 
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {WebConfig.class};
+        return new Class[]{WebConfig.class};
     }
 
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         registerHiddenFieldFilter(servletContext);
     }
 
-    private void registerHiddenFieldFilter(ServletContext servletContext){
+    private void registerHiddenFieldFilter(ServletContext servletContext) {
         servletContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
+
     @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();

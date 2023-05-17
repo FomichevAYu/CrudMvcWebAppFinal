@@ -5,6 +5,7 @@ import web.dao.UserDaoImpl;
 import web.model.User;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserDaoImpl userDao;
